@@ -249,7 +249,6 @@
       transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    /* ----- TITLE (clean) ----- */
     .clean-title {
       font-size: 2rem;
       font-weight: 600;
@@ -270,7 +269,6 @@
       transition: color 0.3s ease;
     }
 
-    /* ----- TOOLBAR (light) ----- */
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -352,6 +350,18 @@
       color: #1a2a4a;
       box-shadow: 0 0 0 2px rgba(74, 106, 159, 0.15);
     }
+    .gender-filter-btn.active-filter {
+      background: #eef3fc;
+      border-color: #4a6a9f;
+      color: #1a2a4a;
+      box-shadow: 0 0 0 2px rgba(74, 106, 159, 0.15);
+    }
+    body.dark-mode .gender-filter-btn.active-filter {
+      background: #3a425a;
+      border-color: #6a7eaa;
+      color: #e8edf5;
+      box-shadow: 0 0 0 2px rgba(106, 126, 170, 0.3);
+    }
     .stats-badge {
       display: flex;
       align-items: center;
@@ -376,7 +386,6 @@
       transition: color 0.3s ease;
     }
 
-    /* ===== DROPDOWN MENU ===== */
     .menu-dropdown-wrapper {
       position: relative;
       display: inline-block;
@@ -461,7 +470,6 @@
       font-weight: 500;
     }
 
-    /* ----- TABLE WRAP ----- */
     .table-wrap {
       overflow-x: auto;
       border-radius: 1.2rem;
@@ -553,7 +561,6 @@
       transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     }
 
-    /* ----- PRICE: original + selling (two lines with labels) ----- */
     .price-block {
       display: flex;
       flex-direction: column;
@@ -676,7 +683,6 @@
       transition: color 0.3s ease;
     }
 
-    /* ===== DETAIL DIALOG ===== */
     .dialog-overlay {
       display: none;
       position: fixed;
@@ -802,7 +808,6 @@
       grid-column: 1 / -1;
     }
 
-    /* ===== FOOTER ===== */
     .page-footer {
       margin-top: 2rem;
       padding-top: 1.2rem;
@@ -824,7 +829,6 @@
       transition: color 0.3s ease;
     }
 
-    /* Dark mode toggle button */
     .dark-toggle-btn {
       background: #ffffff;
       border: 1px solid #dce1ea;
@@ -856,7 +860,6 @@
       color: #e8edf5;
     }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
       .card { padding: 1.2rem; }
       .clean-title { font-size: 1.6rem; }
@@ -965,25 +968,27 @@
 </head>
 <body>
 <div class="card">
-  <!-- CLEAN TITLE -->
   <div class="clean-title">
     <i class="fas fa-tshirt"></i>
     2026 · အထည်စုစည်းမှု
     <i class="fas fa-sparkles" style="font-size:1.2rem; color:#b8c8e0;"></i>
   </div>
 
-  <!-- TOOLBAR -->
   <div class="toolbar">
     <div class="search-box">
       <i class="fas fa-search"></i>
       <input type="text" id="searchInput" placeholder="Search အထည်, barcode...">
     </div>
     <div class="sort-group">
+      <!-- Gender Filter Buttons -->
+      <button id="filterAllBtn" class="active-sort active-filter"><i class="fas fa-tshirt"></i> အားလုံး</button>
+      <button id="filterMaleBtn" class="gender-filter-btn"><i class="fas fa-mars"></i> ကျား</button>
+      <button id="filterFemaleBtn" class="gender-filter-btn"><i class="fas fa-venus"></i> မ</button>
+      
       <button id="sortDateBtn" class="active-sort"><i class="fas fa-star"></i> Brand New</button>
       <button id="sortStockBtn"><i class="fas fa-clock"></i> Old Stock</button>
       <button id="resetSortBtn"><i class="fas fa-list"></i> All List</button>
       
-      <!-- Dark Mode Toggle -->
       <button class="dark-toggle-btn" id="darkModeToggle">
         <i class="fas fa-moon"></i> <span id="darkModeLabel">Dark</span>
       </button>
@@ -1006,7 +1011,6 @@
     </div>
   </div>
 
-  <!-- TABLE -->
   <div class="table-wrap" id="tableScrollWrap">
     <table>
       <thead>
@@ -1023,14 +1027,13 @@
     </table>
   </div>
 
-  <!-- FOOTER -->
   <div class="page-footer">
     <i class="fas fa-copyright"></i> copyright 2026 · <span>ThuRein</span> 
     <i class="fas fa-heart" style="color:#b13e3e;"></i> All Rights Reserved.
   </div>
 </div>
 
-<!-- ===== DETAIL DIALOG ===== -->
+<!-- DIALOG -->
 <div class="dialog-overlay" id="detailDialog">
   <div class="dialog-box">
     <button class="dialog-close-btn" id="dialogCloseBtn">
@@ -1078,7 +1081,6 @@
 
 <script>
   (function() {
-    // ----- DATA (with original price & selling price) -----
     const products = [
       { id: 1, col1: "ရှပ်အင်္ကျီ", col2: "ကော်ပြန့်", barcode: "2026-001", originalPrice: 22000, sellingPrice: 18500,
         image: "https://picsum.photos/id/1/400/400", stock: 12, available: true, dateAdded: "2026-01-15", 
@@ -1109,7 +1111,6 @@
         gender: "unisex", colorName: "အနီရင့်" },
     ];
 
-    // Helper: get gender display
     function getGenderDisplay(gender) {
       const map = {
         'male': '<i class="fas fa-mars"></i> ကျား',
@@ -1125,11 +1126,37 @@
       return 'gender-badge unisex';
     }
 
-    // ----- RENDER -----
     const tbody = document.getElementById('productTableBody');
     const totalSpan = document.getElementById('totalCount');
     let currentData = [...products];
     let sortMode = 'date';
+    let genderFilter = 'all'; // 'all', 'male', 'female'
+
+    function getFilteredAndSortedData() {
+      let data = [...products];
+      
+      // Gender filter
+      if (genderFilter === 'male') {
+        data = data.filter(p => p.gender === 'male');
+      } else if (genderFilter === 'female') {
+        data = data.filter(p => p.gender === 'female');
+      }
+      
+      // Sort
+      if (sortMode === 'date') {
+        data.sort((a, b) => {
+          const dateA = new Date(a.dateAdded);
+          const dateB = new Date(b.dateAdded);
+          if (dateA.getTime() !== dateB.getTime()) {
+            return dateB.getTime() - dateA.getTime();
+          }
+          return b.id - a.id;
+        });
+      } else if (sortMode === 'stock') {
+        data.sort((a, b) => a.stock - b.stock);
+      }
+      return data;
+    }
 
     function renderTable(data) {
       let html = '';
@@ -1186,6 +1213,11 @@
           if (product) openDialog(product);
         });
       });
+    }
+
+    function refreshTable() {
+      currentData = getFilteredAndSortedData();
+      renderTable(currentData);
     }
 
     // ----- DIALOG -----
@@ -1290,7 +1322,6 @@
       localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
     }
 
-    // Load dark mode preference
     if (localStorage.getItem('darkMode') === 'enabled') {
       document.body.classList.add('dark-mode');
       icon.className = 'fas fa-sun';
@@ -1299,58 +1330,79 @@
 
     darkToggle.addEventListener('click', toggleDarkMode);
 
-    // ----- SORT FUNCTIONS -----
-    function sortByDate() {
-      currentData.sort((a, b) => {
-        const dateA = new Date(a.dateAdded);
-        const dateB = new Date(b.dateAdded);
-        if (dateA.getTime() !== dateB.getTime()) {
-          return dateB.getTime() - dateA.getTime();
-        }
-        return b.id - a.id;
+    // ===== GENDER FILTER FUNCTIONS =====
+    function setActiveFilter(activeId) {
+      document.querySelectorAll('.gender-filter-btn, #filterAllBtn').forEach(btn => {
+        btn.classList.remove('active-sort', 'active-filter');
       });
-      renderTable(currentData);
-      setActiveButton('sortDateBtn');
+      const el = document.getElementById(activeId);
+      if (el) el.classList.add('active-sort', 'active-filter');
+    }
+
+    document.getElementById('filterAllBtn').addEventListener('click', function() {
+      genderFilter = 'all';
+      setActiveFilter('filterAllBtn');
+      refreshTable();
+    });
+
+    document.getElementById('filterMaleBtn').addEventListener('click', function() {
+      genderFilter = 'male';
+      setActiveFilter('filterMaleBtn');
+      refreshTable();
+    });
+
+    document.getElementById('filterFemaleBtn').addEventListener('click', function() {
+      genderFilter = 'female';
+      setActiveFilter('filterFemaleBtn');
+      refreshTable();
+    });
+
+    // ===== SORT FUNCTIONS =====
+    function sortByDate() {
       sortMode = 'date';
+      refreshTable();
+      setActiveSort('sortDateBtn');
     }
     
     function sortByStock() {
-      currentData.sort((a, b) => a.stock - b.stock);
-      renderTable(currentData);
-      setActiveButton('sortStockBtn');
       sortMode = 'stock';
+      refreshTable();
+      setActiveSort('sortStockBtn');
     }
     
     function resetSort() {
-      currentData = [...products];
-      renderTable(currentData);
-      setActiveButton('resetSortBtn');
       sortMode = 'default';
+      refreshTable();
+      setActiveSort('resetSortBtn');
     }
     
-    function setActiveButton(id) {
-      document.querySelectorAll('.sort-group button:not(.menu-dropdown-btn):not(.dark-toggle-btn)').forEach(btn => btn.classList.remove('active-sort'));
+    function setActiveSort(id) {
+      document.querySelectorAll('.sort-group button:not(.gender-filter-btn):not(#filterAllBtn):not(.dark-toggle-btn):not(.menu-dropdown-btn)').forEach(btn => btn.classList.remove('active-sort'));
       const el = document.getElementById(id);
       if (el) el.classList.add('active-sort');
     }
 
-    // ----- SEARCH -----
+    // ===== SEARCH =====
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function() {
       const q = this.value.trim().toLowerCase();
       if (q === '') {
-        currentData = [...products];
-        if (sortMode === 'date') sortByDate();
-        else if (sortMode === 'stock') sortByStock();
-        else renderTable(currentData);
+        refreshTable();
         return;
       }
-      const filtered = products.filter(p => 
+      let filtered = products.filter(p => 
         p.col1.toLowerCase().includes(q) || 
         p.col2.toLowerCase().includes(q) || 
         p.barcode.toLowerCase().includes(q) ||
         p.colorName.toLowerCase().includes(q)
       );
+      // Apply gender filter
+      if (genderFilter === 'male') {
+        filtered = filtered.filter(p => p.gender === 'male');
+      } else if (genderFilter === 'female') {
+        filtered = filtered.filter(p => p.gender === 'female');
+      }
+      // Apply sort
       if (sortMode === 'date') {
         filtered.sort((a, b) => {
           const dateA = new Date(a.dateAdded);
@@ -1371,11 +1423,14 @@
     document.getElementById('sortStockBtn').addEventListener('click', sortByStock);
     document.getElementById('resetSortBtn').addEventListener('click', resetSort);
 
-    currentData = [...products];
-    sortByDate();
-    setActiveButton('sortDateBtn');
+    // Set initial active states
+    document.getElementById('filterAllBtn').classList.add('active-sort', 'active-filter');
+    document.getElementById('sortDateBtn').classList.add('active-sort');
+    
+    refreshTable();
 
-    console.log('✅ Clean white UI with original & selling price (labels added) + Dark mode toggle');
+    console.log('✅ Gender filter buttons added: All, Male, Female');
+    console.log('✅ Dialog shows gender-specific info');
   })();
 </script>
 </body>
