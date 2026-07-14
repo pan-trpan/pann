@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 · အထည်စုစည်းမှု</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- RESET & BASE (white + clean) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background: #f5f7fc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1.5rem;
+      transition: background 0.3s ease, color 0.2s ease;
+    }
+    /* Dark mode */
+    body.dark-mode {
+      background: #1a1e2b;
+    }
+    body.dark-mode .card {
+      background: #252b3d;
+      border-color: #3a4055;
+    }
+    body.dark-mode .clean-title {
+      color: #e8edf5;
+    }
+    body.dark-mode .clean-title i {
+      color: #b0c4e8;
+    }
+    body.dark-mode .toolbar {
+      background: #1f2537;
+      border-color: #3a4055;
+    }
+    body.dark-mode .search-box {
+      background: #2d3448;
+      border-color: #434b63;
+    }
+    body.dark-mode .search-box input {
+      color: #e8edf5;
+    }
+    body.dark-mode .search-box input::placeholder {
+      color: #7a86a8;
+    }
+    body.dark-mode .search-box i {
+      color: #8a9abb;
+    }
+    body.dark-mode .sort-group button {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .sort-group button:hover {
+      background: #3a425a;
+      border-color: #6a7eaa;
+      color: #e8edf5;
+    }
+    body.dark-mode .sort-group button.active-sort {
+      background: #3a425a;
+      border-color: #6a7eaa;
+      color: #e8edf5;
+      box-shadow: 0 0 0 2px rgba(106, 126, 170, 0.3);
+    }
+    body.dark-mode .stats-badge {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .stats-badge i {
+      color: #b0c4e8;
+    }
+    body.dark-mode .stats-badge span {
+      color: #e8edf5;
+    }
+    body.dark-mode .menu-dropdown-btn {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .menu-dropdown-btn:hover {
+      background: #3a425a;
+      border-color: #6a7eaa;
+    }
+    body.dark-mode .menu-dropdown-btn i {
+      color: #b0c4e8;
+    }
+    body.dark-mode .menu-dropdown-content {
+      background: #252b3d;
+      border-color: #3a4055;
+    }
+    body.dark-mode .menu-dropdown-content a {
+      color: #c8d0e5;
+    }
+    body.dark-mode .menu-dropdown-content a i {
+      color: #b0c4e8;
+    }
+    body.dark-mode .menu-dropdown-content a:hover {
+      background: #2d3448;
+      color: #e8edf5;
+      border-left-color: #6a7eaa;
+    }
+    body.dark-mode .menu-dropdown-content a.active-drop-item {
+      background: #2d3448;
+      color: #e8edf5;
+      border-left-color: #6a7eaa;
+    }
+    body.dark-mode .table-wrap {
+      background: #1f2537;
+      box-shadow: inset 0 0 0 1px #3a4055;
+    }
+    body.dark-mode .table-wrap::-webkit-scrollbar-track {
+      background: #1f2537;
+    }
+    body.dark-mode .table-wrap::-webkit-scrollbar-thumb {
+      background: #3a425a;
+    }
+    body.dark-mode th {
+      background: #2d3448;
+      color: #b0c4e8;
+      border-bottom: 2px solid #3a4055;
+    }
+    body.dark-mode td {
+      color: #d8e0f0;
+      border-bottom: 1px solid #2d3448;
+    }
+    body.dark-mode td:hover {
+      background: #252b3d;
+    }
+    body.dark-mode tr:hover td {
+      background: #252b3d;
+    }
+    body.dark-mode .product-name {
+      color: #e8edf5;
+    }
+    body.dark-mode .product-name .sub-text {
+      color: #8a9abb;
+    }
+    body.dark-mode .barcode {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .price-original {
+      color: #8a9abb;
+    }
+    body.dark-mode .price-selling {
+      color: #e8edf5;
+    }
+    body.dark-mode .price-selling i {
+      color: #b0c4e8;
+    }
+    body.dark-mode .product-img-wrapper img {
+      border-color: #3a4055;
+      background: #2d3448;
+    }
+    body.dark-mode .stock-badge {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .available-green {
+      color: #7dbd8a;
+      border-color: #3a6a4a;
+      background: #1e3a2a;
+    }
+    body.dark-mode .available-red {
+      color: #e07a7a;
+      border-color: #6a3a3a;
+      background: #3a1e1e;
+    }
+    body.dark-mode .gender-badge {
+      background: #2d3448;
+      border-color: #434b63;
+    }
+    body.dark-mode .gender-badge.male {
+      color: #7db0d8;
+      border-color: #3a5a7a;
+      background: #1e2a3a;
+    }
+    body.dark-mode .gender-badge.female {
+      color: #d87a9a;
+      border-color: #6a3a4a;
+      background: #3a1e2a;
+    }
+    body.dark-mode .gender-badge.unisex {
+      color: #a0b0d0;
+      border-color: #3a4055;
+      background: #222a3a;
+    }
+    body.dark-mode .color-text {
+      color: #d8e0f0;
+    }
+    body.dark-mode .click-hint {
+      color: #6a7a9a;
+    }
+    body.dark-mode .dialog-box {
+      background: #252b3d;
+      border-color: #3a4055;
+    }
+    body.dark-mode .dialog-close-btn {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .dialog-close-btn:hover {
+      background: #3a425a;
+    }
+    body.dark-mode .dialog-image {
+      background: #1f2537;
+      border-color: #3a4055;
+    }
+    body.dark-mode .dialog-info .label {
+      color: #8a9abb;
+    }
+    body.dark-mode .dialog-info .value {
+      color: #e8edf5;
+    }
+    body.dark-mode .dialog-info .value.price {
+      color: #e8edf5;
+    }
+    body.dark-mode .page-footer {
+      border-top-color: #2d3448;
+      color: #8a9abb;
+    }
+    body.dark-mode .page-footer span {
+      color: #e8edf5;
+    }
+    body.dark-mode .dialog-overlay {
+      background: rgba(0,0,0,0.6);
+    }
+
+    .card {
+      max-width: 1400px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1.8rem 1.8rem 2rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06), 0 4px 10px rgba(0,0,0,0.02);
+      border: 1px solid #eef0f5;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* ----- TITLE (clean) ----- */
+    .clean-title {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      text-align: center;
+      color: #1a2639;
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      transition: color 0.3s ease;
+    }
+    .clean-title i {
+      color: #3b4a6b;
+      font-size: 1.8rem;
+      transition: color 0.3s ease;
+    }
+
+    /* ----- TOOLBAR (light) ----- */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      background: #f8faff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 60px;
+      border: 1px solid #e2e8f0;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 40px;
+      padding: 0.2rem 0.2rem 0.2rem 1.2rem;
+      flex: 1 1 200px;
+      min-width: 150px;
+      border: 1px solid #dce1ea;
+      transition: 0.2s, background 0.3s ease, border-color 0.3s ease;
+    }
+    .search-box:focus-within {
+      border-color: #4a6a9f;
+      box-shadow: 0 0 0 3px rgba(74, 106, 159, 0.12);
+    }
+    .search-box i {
+      color: #7c8aa8;
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      padding: 0.55rem 0.2rem;
+      color: #1f2a41;
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+      transition: color 0.3s ease;
+    }
+    .search-box input::placeholder {
+      color: #a3b1cc;
+      font-size: 0.8rem;
+      transition: color 0.3s ease;
+    }
+    .sort-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .sort-group button {
+      background: #ffffff;
+      border: 1px solid #dce1ea;
+      color: #2c3a58;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: 0.2s, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .sort-group button:hover {
+      background: #f0f4fe;
+      border-color: #4a6a9f;
+      color: #1a2a4a;
+    }
+    .sort-group button.active-sort {
+      background: #eef3fc;
+      border-color: #4a6a9f;
+      color: #1a2a4a;
+      box-shadow: 0 0 0 2px rgba(74, 106, 159, 0.15);
+    }
+    .stats-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #2c3a58;
+      background: #f0f4fe;
+      padding: 0.2rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid #dce1ea;
+      white-space: nowrap;
+      font-weight: 500;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .stats-badge i {
+      color: #4a6a9f;
+      transition: color 0.3s ease;
+    }
+    .stats-badge span {
+      font-weight: 700;
+      color: #1a2a4a;
+      transition: color 0.3s ease;
+    }
+
+    /* ===== DROPDOWN MENU ===== */
+    .menu-dropdown-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .menu-dropdown-btn {
+      background: #ffffff;
+      border: 1px solid #dce1ea;
+      color: #2c3a58;
+      padding: 0.3rem 0.85rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .menu-dropdown-btn:hover {
+      background: #f0f4fe;
+      border-color: #4a6a9f;
+      color: #1a2a4a;
+    }
+    .menu-dropdown-btn i {
+      font-size: 0.9rem;
+      color: #4a6a9f;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+    }
+    .menu-dropdown-btn.open i {
+      transform: rotate(90deg);
+    }
+    .menu-dropdown-content {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 190px;
+      background: #ffffff;
+      border-radius: 1.2rem;
+      padding: 0.4rem 0;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.06);
+      z-index: 100;
+      animation: dropdownSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+      transform-origin: top right;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .menu-dropdown-content.show {
+      display: block;
+    }
+    @keyframes dropdownSlide {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .menu-dropdown-content a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.6rem 1.2rem;
+      color: #2c3a58;
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.15s ease, background 0.3s ease, color 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+    .menu-dropdown-content a i {
+      width: 1.2rem;
+      color: #4a6a9f;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    .menu-dropdown-content a:hover {
+      background: #f5f8ff;
+      color: #1a2a4a;
+      border-left-color: #4a6a9f;
+    }
+    .menu-dropdown-content a.active-drop-item {
+      background: #f0f4fe;
+      color: #1a2a4a;
+      border-left-color: #4a6a9f;
+      font-weight: 500;
+    }
+
+    /* ----- TABLE WRAP ----- */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 1.2rem;
+      background: #ffffff;
+      padding: 0.2rem;
+      box-shadow: inset 0 0 0 1px #eef0f5;
+      max-height: 560px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .table-wrap::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .table-wrap::-webkit-scrollbar-track {
+      background: #f1f4fa;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: #c5d0e0;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+    .table-wrap::-webkit-scrollbar-thumb:hover {
+      background: #a0b2cc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+      min-width: 800px;
+    }
+    th {
+      background: #f8faff;
+      color: #3b4a6b;
+      font-weight: 600;
+      padding: 0.8rem 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border-bottom: 2px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      font-size: 0.7rem;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    td {
+      padding: 0.8rem 0.8rem;
+      color: #1f2a41;
+      border-bottom: 1px solid #eef0f5;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: 0.1s, color 0.3s ease, border-color 0.3s ease;
+    }
+    td:hover {
+      background: #fafcff;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafcff; }
+
+    .product-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1a2639;
+      transition: color 0.3s ease;
+    }
+    .product-name .sub-text {
+      color: #6a7e9e;
+      font-size: 0.7rem;
+      font-weight: 400;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .barcode {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+      background: #f1f4fa;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      color: #1f2a41;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* ----- PRICE: original + selling (two lines with labels) ----- */
+    .price-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+      line-height: 1.3;
+    }
+    .price-original {
+      font-size: 0.7rem;
+      color: #7c8aa8;
+      text-decoration: line-through;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transition: color 0.3s ease;
+    }
+    .price-original i {
+      font-size: 0.6rem;
+      color: #a0b2cc;
+      transition: color 0.3s ease;
+    }
+    .price-selling {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1a2a4a;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.3s ease;
+    }
+    .price-selling i {
+      font-size: 0.8rem;
+      color: #4a6a9f;
+      transition: color 0.3s ease;
+    }
+    .price-label {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: #8a9abb;
+      margin-right: 2px;
+    }
+
+    .product-img-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .product-img-wrapper img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 14px;
+      background: #f1f4fa;
+      border: 2px solid #e2e8f0;
+      transition: 0.25s ease, border-color 0.3s ease, background 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      cursor: pointer;
+    }
+    .product-img-wrapper img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      border-color: #4a6a9f;
+    }
+    .stock-badge {
+      font-size: 0.7rem;
+      background: #f1f4fa;
+      padding: 0.1rem 0.7rem;
+      border-radius: 40px;
+      border: 1px solid #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      color: #1f2a41;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .stock-badge i { font-size: 0.65rem; }
+    .available-green { color: #2c7a4a; border-color: #b8d9c5; background: #edf7f0; }
+    .available-red { color: #b13e3e; border-color: #f0d0d0; background: #fdf0f0; }
+    .click-hint {
+      font-size: 0.6rem;
+      color: #8a9bb8;
+      margin-left: 0.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .gender-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #f1f4fa;
+      border: 1px solid #e2e8f0;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .gender-badge.male {
+      color: #2c5f8a;
+      border-color: #b8d0e5;
+      background: #eef4fc;
+    }
+    .gender-badge.female {
+      color: #a64a6a;
+      border-color: #e8ccd6;
+      background: #fcf2f6;
+    }
+    .gender-badge.unisex {
+      color: #4a5a7a;
+      border-color: #d0d8e8;
+      background: #f4f6fc;
+    }
+    .color-text {
+      font-size: 0.8rem;
+      color: #1f2a41;
+      transition: color 0.3s ease;
+    }
+
+    /* ===== DETAIL DIALOG ===== */
+    .dialog-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      animation: fadeIn 0.3s ease;
+      transition: background 0.3s ease;
+    }
+    .dialog-overlay.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .dialog-box {
+      background: #ffffff;
+      border-radius: 2rem;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+      animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    @keyframes slideUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .dialog-scroll-content {
+      overflow-y: auto;
+      padding-right: 4px;
+      flex: 1;
+    }
+    .dialog-scroll-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .dialog-scroll-content::-webkit-scrollbar-track {
+      background: #f1f4fa;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+    .dialog-scroll-content::-webkit-scrollbar-thumb {
+      background: #c5d0e0;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+    .dialog-close-btn {
+      position: sticky;
+      top: -8px;
+      right: -8px;
+      float: right;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f1f4fa;
+      border: 1px solid #dce1ea;
+      color: #1f2a41;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      flex-shrink: 0;
+      margin-bottom: 0.5rem;
+    }
+    .dialog-close-btn:hover {
+      background: #e2e8f0;
+      transform: rotate(90deg);
+    }
+    .dialog-image {
+      width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      border-radius: 1.2rem;
+      background: #f8faff;
+      border: 1px solid #eef0f5;
+      margin-bottom: 1.2rem;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .dialog-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem 1.5rem;
+      padding-bottom: 0.2rem;
+    }
+    .dialog-info .label {
+      color: #6a7e9e;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .dialog-info .value {
+      color: #1a2639;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .dialog-info .value.price {
+      color: #1a2a4a;
+      font-size: 1.3rem;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    .dialog-info .full-row {
+      grid-column: 1 / -1;
+    }
+
+    /* ===== FOOTER ===== */
+    .page-footer {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #eef0f5;
+      text-align: center;
+      color: #7c8aa8;
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+    .page-footer span {
+      color: #1a2a4a;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .page-footer i {
+      color: #b13e3e;
+      margin: 0 0.2rem;
+      transition: color 0.3s ease;
+    }
+
+    /* Dark mode toggle button */
+    .dark-toggle-btn {
+      background: #ffffff;
+      border: 1px solid #dce1ea;
+      color: #2c3a58;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .dark-toggle-btn:hover {
+      background: #f0f4fe;
+      border-color: #4a6a9f;
+      color: #1a2a4a;
+    }
+    body.dark-mode .dark-toggle-btn {
+      background: #2d3448;
+      border-color: #434b63;
+      color: #c8d0e5;
+    }
+    body.dark-mode .dark-toggle-btn:hover {
+      background: #3a425a;
+      border-color: #6a7eaa;
+      color: #e8edf5;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .card { padding: 1.2rem; }
+      .clean-title { font-size: 1.6rem; }
+    }
+    @media (max-width: 768px) {
+      body { padding: 0.8rem; }
+      .card { padding: 0.8rem; border-radius: 1.2rem; }
+      .clean-title { font-size: 1.3rem; gap: 0.3rem; margin-bottom: 1rem; }
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 28px;
+        padding: 0.6rem 0.8rem;
+        gap: 0.5rem;
+      }
+      .search-box { flex: 1 1 auto; }
+      .sort-group { justify-content: center; flex-wrap: wrap; }
+      .sort-group button { font-size: 0.65rem; padding: 0.2rem 0.6rem; }
+      .stats-badge { justify-content: center; font-size: 0.7rem; padding: 0.15rem 0.8rem; }
+      thead { display: none; }
+      .table-wrap {
+        max-height: none;
+        overflow-y: visible;
+        border-radius: 1rem;
+        padding: 0.2rem;
+        background: transparent;
+        box-shadow: none;
+      }
+      table { min-width: unset; width: 100%; display: block; }
+      tbody { display: flex; flex-direction: column; gap: 1rem; }
+      tr {
+        display: block;
+        background: #ffffff;
+        border-radius: 1.2rem;
+        padding: 1rem;
+        border: 1px solid #eef0f5;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        transition: background 0.3s ease, border-color 0.3s ease;
+      }
+      body.dark-mode tr {
+        background: #252b3d;
+        border-color: #3a4055;
+      }
+      tr:hover td { background: transparent; }
+      td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eef0f5;
+        background: transparent !important;
+      }
+      body.dark-mode td {
+        border-bottom-color: #2d3448;
+      }
+      td:last-child { border-bottom: none; }
+      td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6a7e9e;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        margin-right: 0.5rem;
+        min-width: 70px;
+        transition: color 0.3s ease;
+      }
+      body.dark-mode td::before {
+        color: #8a9abb;
+      }
+      .product-name { font-size: 0.85rem; }
+      .product-name .sub-text { font-size: 0.65rem; }
+      .product-img-wrapper { flex-direction: column; align-items: flex-end; gap: 0.4rem; width: 100%; }
+      .product-img-wrapper img { width: 90px; height: 90px; }
+      .price-selling { font-size: 0.95rem; }
+      .price-original { font-size: 0.65rem; }
+      .barcode { font-size: 0.6rem; }
+      .dialog-box { padding: 1.2rem; margin: 0.5rem; max-height: 95vh; border-radius: 1.5rem; }
+      .dialog-info { grid-template-columns: 1fr; gap: 0.4rem; }
+      .dialog-image { max-height: 200px; }
+      .dialog-close-btn { width: 36px; height: 36px; font-size: 1rem; }
+      .menu-dropdown-content { right: 0; left: auto; min-width: 160px; }
+      .dark-toggle-btn { font-size: 0.65rem; padding: 0.2rem 0.6rem; }
+    }
+    @media (max-width: 480px) {
+      .clean-title { font-size: 1.1rem; }
+      .card { padding: 0.5rem; }
+      tr { padding: 0.7rem; }
+      td { padding: 0.4rem 0; font-size: 0.75rem; flex-wrap: wrap; }
+      td::before { font-size: 0.6rem; min-width: 60px; }
+      .product-name { font-size: 0.75rem; }
+      .product-img-wrapper img { width: 70px; height: 70px; }
+      .price-selling { font-size: 0.85rem; }
+      .sort-group button { font-size: 0.55rem; padding: 0.15rem 0.5rem; }
+      .menu-dropdown-btn { font-size: 0.6rem; padding: 0.15rem 0.5rem; }
+      .menu-dropdown-content { min-width: 150px; }
+      .menu-dropdown-content a { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+      .dialog-box { padding: 0.8rem; }
+      .dialog-image { max-height: 150px; }
+      .dialog-close-btn { width: 30px; height: 30px; font-size: 0.8rem; }
+      .dialog-info .value { font-size: 0.85rem; }
+      .dialog-info .value.price { font-size: 1rem; }
+      .dark-toggle-btn { font-size: 0.55rem; padding: 0.15rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <!-- CLEAN TITLE -->
+  <div class="clean-title">
+    <i class="fas fa-tshirt"></i>
+    2026 · အထည်စုစည်းမှု
+    <i class="fas fa-sparkles" style="font-size:1.2rem; color:#b8c8e0;"></i>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search အထည်, barcode...">
+    </div>
+    <div class="sort-group">
+      <button id="sortDateBtn" class="active-sort"><i class="fas fa-star"></i> Brand New</button>
+      <button id="sortStockBtn"><i class="fas fa-clock"></i> Old Stock</button>
+      <button id="resetSortBtn"><i class="fas fa-list"></i> All List</button>
+      
+      <!-- Dark Mode Toggle -->
+      <button class="dark-toggle-btn" id="darkModeToggle">
+        <i class="fas fa-moon"></i> <span id="darkModeLabel">Dark</span>
+      </button>
+
+      <div class="menu-dropdown-wrapper">
+        <button class="menu-dropdown-btn" id="menuDropdownBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="menu-dropdown-content" id="menuDropdownContent">
+          <a href="#" class="active-drop-item"><i class="fas fa-tshirt"></i> Collection 2026</a>
+          <a href="https://www.google.com" target="_blank"><i class="fas fa-info-circle"></i> About</a>
+          <a href="https://www.google.com" target="_blank"><i class="fas fa-code"></i> Web Building</a>
+          <a href="https://www.google.com" target="_blank"><i class="fas fa-gamepad"></i> Online Game Selling</a>
+          <a href="https://www.google.com" target="_blank"><i class="fas fa-laptop-code"></i> IT Products</a>
+        </div>
+      </div>
+    </div>
+    <div class="stats-badge">
+      <i class="fas fa-tshirt"></i> ရရှိနိုင်သောအထည် <span id="totalCount">0</span>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap" id="tableScrollWrap">
+    <table>
+      <thead>
+        <tr>
+          <th>အထည်အမျိုးအစား</th>
+          <th>ကျား/မ</th>
+          <th>ကာလာ</th>
+          <th>barcode</th>
+          <th>ဈေးနှုန်း</th>
+          <th>Image / Stock</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <i class="fas fa-copyright"></i> copyright 2026 · <span>ThuRein</span> 
+    <i class="fas fa-heart" style="color:#b13e3e;"></i> All Rights Reserved.
+  </div>
+</div>
+
+<!-- ===== DETAIL DIALOG ===== -->
+<div class="dialog-overlay" id="detailDialog">
+  <div class="dialog-box">
+    <button class="dialog-close-btn" id="dialogCloseBtn">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="dialog-scroll-content">
+      <img class="dialog-image" id="dialogImage" src="" alt="Product Detail">
+      <div class="dialog-info">
+        <div class="full-row">
+          <span class="label">အထည်အမျိုးအစား</span>
+          <div class="value" id="dialogName" style="font-size:1.2rem; font-weight:600;"></div>
+        </div>
+        <div>
+          <span class="label">ကျား/မ</span>
+          <div class="value" id="dialogGender"></div>
+        </div>
+        <div>
+          <span class="label">ကာလာ</span>
+          <div class="value" id="dialogColor"></div>
+        </div>
+        <div>
+          <span class="label">barcode</span>
+          <div class="value" id="dialogBarcode" style="font-family:'Courier New',monospace;"></div>
+        </div>
+        <div>
+          <span class="label">ဈေးနှုန်း</span>
+          <div class="value price" id="dialogPrice"></div>
+        </div>
+        <div>
+          <span class="label">Stock</span>
+          <div class="value" id="dialogStock"></div>
+        </div>
+        <div>
+          <span class="label">Status</span>
+          <div class="value" id="dialogStatus"></div>
+        </div>
+        <div>
+          <span class="label">Added Date</span>
+          <div class="value" id="dialogDate"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- DATA (with original price & selling price) -----
+    const products = [
+      { id: 1, col1: "ရှပ်အင်္ကျီ", col2: "ကော်ပြန့်", barcode: "2026-001", originalPrice: 22000, sellingPrice: 18500,
+        image: "https://picsum.photos/id/1/400/400", stock: 12, available: true, dateAdded: "2026-01-15", 
+        gender: "male", colorName: "အနက်ပြာ" },
+      { id: 2, col1: "အင်္ကျီတို", col2: "ပိတ်ချော", barcode: "2026-002", originalPrice: 26000, sellingPrice: 22000,
+        image: "https://picsum.photos/id/21/400/400", stock: 5, available: true, dateAdded: "2026-01-05", 
+        gender: "female", colorName: "အနီ" },
+      { id: 3, col1: "ဂျင်းဘောင်းဘီ", col2: "အပြာရောင်", barcode: "2026-003", originalPrice: 38000, sellingPrice: 32000,
+        image: "https://picsum.photos/id/26/400/400", stock: 0, available: false, dateAdded: "2026-01-28", 
+        gender: "unisex", colorName: "အပြာ" },
+      { id: 4, col1: "အားကစားဝတ်စုံ", col2: "အနက်ရောင်", barcode: "2026-004", originalPrice: 32000, sellingPrice: 27500,
+        image: "https://picsum.photos/id/48/400/400", stock: 8, available: true, dateAdded: "2026-02-01", 
+        gender: "unisex", colorName: "အနက်" },
+      { id: 5, col1: "အင်္ကျီရှည်", col2: "ခရင်မ်", barcode: "2026-005", originalPrice: 23500, sellingPrice: 19800,
+        image: "https://picsum.photos/id/55/400/400", stock: 2, available: true, dateAdded: "2026-01-20", 
+        gender: "female", colorName: "ခရင်မ်" },
+      { id: 6, col1: "အင်္ကျီလက်တို", col2: "ပန်းရောင်", barcode: "2026-006", originalPrice: 19500, sellingPrice: 16200,
+        image: "https://picsum.photos/id/64/400/400", stock: 0, available: false, dateAdded: "2026-01-25", 
+        gender: "female", colorName: "ပန်းရောင်" },
+      { id: 7, col1: "အင်္ကျီအိတ်", col2: "အဖြူ", barcode: "2026-007", originalPrice: 12000, sellingPrice: 9500,
+        image: "https://picsum.photos/id/77/400/400", stock: 15, available: true, dateAdded: "2026-01-10", 
+        gender: "male", colorName: "အဖြူ" },
+      { id: 8, col1: "ဘောင်းဘီတို", col2: "ကြက်ခြေ", barcode: "2026-008", originalPrice: 22500, sellingPrice: 18900,
+        image: "https://picsum.photos/id/88/400/400", stock: 3, available: true, dateAdded: "2026-02-01", 
+        gender: "male", colorName: "အညို" },
+      { id: 9, col1: "အင်္ကျီလုံ", col2: "အနီ", barcode: "2026-009", originalPrice: 25500, sellingPrice: 21200,
+        image: "https://picsum.photos/id/99/400/400", stock: 0, available: false, dateAdded: "2026-01-01", 
+        gender: "unisex", colorName: "အနီရင့်" },
+    ];
+
+    // Helper: get gender display
+    function getGenderDisplay(gender) {
+      const map = {
+        'male': '<i class="fas fa-mars"></i> ကျား',
+        'female': '<i class="fas fa-venus"></i> မ',
+        'unisex': '<i class="fas fa-genderless"></i> ကျား/မ'
+      };
+      return map[gender] || gender;
+    }
+
+    function getGenderClass(gender) {
+      if (gender === 'male') return 'gender-badge male';
+      if (gender === 'female') return 'gender-badge female';
+      return 'gender-badge unisex';
+    }
+
+    // ----- RENDER -----
+    const tbody = document.getElementById('productTableBody');
+    const totalSpan = document.getElementById('totalCount');
+    let currentData = [...products];
+    let sortMode = 'date';
+
+    function renderTable(data) {
+      let html = '';
+      let availableCount = 0;
+      data.forEach(p => {
+        if (p.available) availableCount++;
+        const stockLabel = p.stock === 0 ? 'Shopping' : `${p.stock} left`;
+        const availClass = p.available ? 'available-green' : 'available-red';
+        const availText = p.available ? '✓ In Stock' : '✕ Out of Stock';
+
+        html += `
+          <tr data-id="${p.id}">
+            <td data-label="အထည်" class="clickable-cell" data-field="name">
+              <span class="product-name">${p.col1} <span class="sub-text">${p.col2}</span></span>
+            </td>
+            <td data-label="ကျား/မ" class="clickable-cell" data-field="gender">
+              <span class="${getGenderClass(p.gender)}">${getGenderDisplay(p.gender)}</span>
+            </td>
+            <td data-label="ကာလာ" class="clickable-cell" data-field="color">
+              <span class="color-text">${p.colorName}</span>
+            </td>
+            <td data-label="barcode" class="clickable-cell" data-field="barcode">
+              <span class="barcode">${p.barcode}</span>
+            </td>
+            <td data-label="ဈေးနှုန်း" class="clickable-cell" data-field="price">
+              <div class="price-block">
+                <span class="price-original"><i class="fas fa-tag"></i> <span class="price-label">မူရင်းဈေး</span> ${p.originalPrice.toLocaleString('my-MM')} Ks</span>
+                <span class="price-selling"><i class="fas fa-arrow-right"></i> <span class="price-label">ရောင်းဈေး</span> ${p.sellingPrice.toLocaleString('my-MM')} Ks</span>
+              </div>
+            </td>
+            <td data-label="Image / Stock" class="clickable-cell" data-field="image">
+              <div class="product-img-wrapper">
+                <img src="${p.image}" alt="${p.col1}" loading="lazy">
+                <div>
+                  <span class="stock-badge ${availClass}"><i class="fas ${p.available ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${availText}</span>
+                  <span class="stock-badge"><i class="fas fa-boxes"></i> ${stockLabel}</span>
+                  <span class="click-hint"><i class="fas fa-hand-pointer"></i> click</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+      totalSpan.textContent = availableCount;
+      
+      document.querySelectorAll('.clickable-cell').forEach(cell => {
+        cell.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const row = this.closest('tr');
+          if (!row) return;
+          const id = parseInt(row.dataset.id);
+          const product = currentData.find(p => p.id === id);
+          if (product) openDialog(product);
+        });
+      });
+    }
+
+    // ----- DIALOG -----
+    const dialog = document.getElementById('detailDialog');
+    const dialogClose = document.getElementById('dialogCloseBtn');
+    const dialogImg = document.getElementById('dialogImage');
+    const dialogName = document.getElementById('dialogName');
+    const dialogGender = document.getElementById('dialogGender');
+    const dialogColor = document.getElementById('dialogColor');
+    const dialogBarcode = document.getElementById('dialogBarcode');
+    const dialogPrice = document.getElementById('dialogPrice');
+    const dialogStock = document.getElementById('dialogStock');
+    const dialogStatus = document.getElementById('dialogStatus');
+    const dialogDate = document.getElementById('dialogDate');
+
+    function openDialog(product) {
+      dialogImg.src = product.image;
+      dialogImg.alt = product.col1;
+      dialogName.innerHTML = `${product.col1} <span style="color:#6a7e9e;font-size:0.9rem;font-weight:400;">${product.col2}</span>`;
+      dialogGender.innerHTML = getGenderDisplay(product.gender);
+      dialogColor.textContent = product.colorName;
+      dialogBarcode.textContent = product.barcode;
+      dialogPrice.innerHTML = `
+        <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px;">
+          <span style="font-size:0.8rem; color:#7c8aa8; text-decoration:line-through;"><span class="price-label">မူရင်းဈေး</span> ${product.originalPrice.toLocaleString('my-MM')} Ks</span>
+          <span style="font-size:1.3rem; font-weight:700;"><span class="price-label" style="font-size:0.7rem; font-weight:400; color:#8a9abb;">ရောင်းဈေး</span> ${product.sellingPrice.toLocaleString('my-MM')} Ks</span>
+        </div>
+      `;
+      dialogStock.textContent = product.stock === 0 ? 'Out of Stock (Shopping)' : `${product.stock} left`;
+      dialogStatus.innerHTML = product.available 
+        ? '<span style="color:#2c7a4a;"><i class="fas fa-check-circle"></i> In Stock</span>' 
+        : '<span style="color:#b13e3e;"><i class="fas fa-times-circle"></i> Out of Stock</span>';
+      dialogDate.textContent = new Date(product.dateAdded).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      
+      dialog.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      const scrollContent = document.querySelector('.dialog-scroll-content');
+      if (scrollContent) scrollContent.scrollTop = 0;
+    }
+
+    function closeDialog() {
+      dialog.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    dialogClose.addEventListener('click', closeDialog);
+    dialog.addEventListener('click', function(e) {
+      if (e.target === this) closeDialog();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDialog();
+    });
+
+    // ===== DROPDOWN MENU =====
+    const menuBtn = document.getElementById('menuDropdownBtn');
+    const menuContent = document.getElementById('menuDropdownContent');
+    
+    menuBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isOpen = menuContent.classList.contains('show');
+      if (isOpen) {
+        menuContent.classList.remove('show');
+        menuBtn.classList.remove('open');
+      } else {
+        menuContent.classList.add('show');
+        menuBtn.classList.add('open');
+      }
+    });
+    
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.menu-dropdown-wrapper')) {
+        menuContent.classList.remove('show');
+        menuBtn.classList.remove('open');
+      }
+    });
+    
+    menuContent.querySelectorAll('a').forEach(item => {
+      item.addEventListener('click', function(e) {
+        menuContent.querySelectorAll('a').forEach(a => a.classList.remove('active-drop-item'));
+        this.classList.add('active-drop-item');
+        menuContent.classList.remove('show');
+        menuBtn.classList.remove('open');
+      });
+    });
+
+    // ===== DARK MODE TOGGLE =====
+    const darkToggle = document.getElementById('darkModeToggle');
+    const darkLabel = document.getElementById('darkModeLabel');
+    const icon = darkToggle.querySelector('i');
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      if (isDark) {
+        icon.className = 'fas fa-sun';
+        darkLabel.textContent = 'Light';
+      } else {
+        icon.className = 'fas fa-moon';
+        darkLabel.textContent = 'Dark';
+      }
+      localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    }
+
+    // Load dark mode preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+      icon.className = 'fas fa-sun';
+      darkLabel.textContent = 'Light';
+    }
+
+    darkToggle.addEventListener('click', toggleDarkMode);
+
+    // ----- SORT FUNCTIONS -----
+    function sortByDate() {
+      currentData.sort((a, b) => {
+        const dateA = new Date(a.dateAdded);
+        const dateB = new Date(b.dateAdded);
+        if (dateA.getTime() !== dateB.getTime()) {
+          return dateB.getTime() - dateA.getTime();
+        }
+        return b.id - a.id;
+      });
+      renderTable(currentData);
+      setActiveButton('sortDateBtn');
+      sortMode = 'date';
+    }
+    
+    function sortByStock() {
+      currentData.sort((a, b) => a.stock - b.stock);
+      renderTable(currentData);
+      setActiveButton('sortStockBtn');
+      sortMode = 'stock';
+    }
+    
+    function resetSort() {
+      currentData = [...products];
+      renderTable(currentData);
+      setActiveButton('resetSortBtn');
+      sortMode = 'default';
+    }
+    
+    function setActiveButton(id) {
+      document.querySelectorAll('.sort-group button:not(.menu-dropdown-btn):not(.dark-toggle-btn)').forEach(btn => btn.classList.remove('active-sort'));
+      const el = document.getElementById(id);
+      if (el) el.classList.add('active-sort');
+    }
+
+    // ----- SEARCH -----
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function() {
+      const q = this.value.trim().toLowerCase();
+      if (q === '') {
+        currentData = [...products];
+        if (sortMode === 'date') sortByDate();
+        else if (sortMode === 'stock') sortByStock();
+        else renderTable(currentData);
+        return;
+      }
+      const filtered = products.filter(p => 
+        p.col1.toLowerCase().includes(q) || 
+        p.col2.toLowerCase().includes(q) || 
+        p.barcode.toLowerCase().includes(q) ||
+        p.colorName.toLowerCase().includes(q)
+      );
+      if (sortMode === 'date') {
+        filtered.sort((a, b) => {
+          const dateA = new Date(a.dateAdded);
+          const dateB = new Date(b.dateAdded);
+          if (dateA.getTime() !== dateB.getTime()) {
+            return dateB.getTime() - dateA.getTime();
+          }
+          return b.id - a.id;
+        });
+      } else if (sortMode === 'stock') {
+        filtered.sort((a, b) => a.stock - b.stock);
+      }
+      renderTable(filtered);
+    });
+
+    // ----- INIT -----
+    document.getElementById('sortDateBtn').addEventListener('click', sortByDate);
+    document.getElementById('sortStockBtn').addEventListener('click', sortByStock);
+    document.getElementById('resetSortBtn').addEventListener('click', resetSort);
+
+    currentData = [...products];
+    sortByDate();
+    setActiveButton('sortDateBtn');
+
+    console.log('✅ Clean white UI with original & selling price (labels added) + Dark mode toggle');
+  })();
+</script>
+</body>
+</html>
